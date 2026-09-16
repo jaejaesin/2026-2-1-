@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>봉곡중학교 — 1학년 현장체험학습 학부모 동의서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --primary:#1a4f8a; --accent:#f0a500; --green:#2e7d52; --red:#c0392b;
+  --light-blue:#e8f2fc; --light-green:#e8f5ee; --light-yellow:#fef9ec;
+  --light-red:#fdecea; --gray:#5a6272; --light-gray:#f4f6f9;
+  --border:#dde3ec; --text:#1c2333; --bg:#f0f3f8;
+}
+
+/* ── 탭 전환 ── */
+body { font-family:'Noto Sans KR',sans-serif; background:var(--bg); min-height:100vh; color:var(--text); }
+.tab-bar {
+  position:sticky; top:0; z-index:100;
+  display:flex; background:#fff;
+  box-shadow:0 2px 8px rgba(26,79,138,.12);
+}
+.tab-btn {
+  flex:1; padding:14px 10px; border:none; background:transparent;
+  font-family:'Noto Sans KR',sans-serif; font-size:14px; font-weight:700;
+  color:var(--gray); cursor:pointer; border-bottom:3px solid transparent;
+  transition:all .2s; letter-spacing:.02em;
+}
+.tab-btn.active { color:var(--primary); border-bottom-color:var(--primary); background:var(--light-blue); }
+.tab-btn:hover:not(.active) { background:#f8fafc; color:var(--text); }
+
+.view { display:none; padding-bottom:40px; }
+.view.active { display:block; }
+
+/* ══════════════════════════════
+   가정통신문
+══════════════════════════════ */
+.page { max-width:780px; margin:0 auto; background:#fff; border-radius:4px; box-shadow:0 4px 30px rgba(26,79,138,.10); overflow:hidden; margin-top:20px; margin-bottom:20px; }
+.header { background:linear-gradient(135deg,var(--primary) 0%,#2563a8 60%,#1d6fa4 100%); padding:36px 44px 28px; position:relative; overflow:hidden; }
+.header::before { content:''; position:absolute; right:-40px; top:-40px; width:220px; height:220px; border-radius:50%; background:rgba(255,255,255,.06); }
+.header::after { content:''; position:absolute; right:60px; bottom:-60px; width:150px; height:150px; border-radius:50%; background:rgba(240,165,0,.15); }
+.school-badge { display:inline-block; background:rgba(255,255,255,.18); color:rgba(255,255,255,.92); font-size:12px; font-weight:500; letter-spacing:.12em; padding:4px 14px; border-radius:20px; border:1px solid rgba(255,255,255,.25); margin-bottom:14px; }
+.header h1 { font-family:'Noto Serif KR',serif; color:#fff; font-size:26px; font-weight:700; line-height:1.4; margin-bottom:8px; position:relative; z-index:1; }
+.header h1 span { color:var(--accent); }
+.header-sub { color:rgba(255,255,255,.75); font-size:13.5px; position:relative; z-index:1; }
+.header-year { position:absolute; right:44px; top:50%; transform:translateY(-50%); font-size:72px; font-weight:900; color:rgba(255,255,255,.07); letter-spacing:-4px; user-select:none; }
+.greeting { background:var(--light-blue); border-left:4px solid var(--primary); padding:18px 44px; font-size:13.5px; line-height:1.85; color:#3a4a60; }
+.greeting strong { color:var(--primary); font-weight:700; }
+.body-wrap { padding:32px 44px; }
+.section { margin-bottom:36px; }
+.section:last-child { margin-bottom:0; }
+.section-title { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.section-number { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+.num-blue { background:var(--primary); color:#fff; }
+.num-green { background:var(--green); color:#fff; }
+.section-title h2 { font-size:16px; font-weight:700; color:var(--text); line-height:1.3; }
+.section-title h2 em { font-style:normal; color:var(--primary); }
+.info-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px; }
+.info-card { border-radius:10px; padding:14px 16px; border:1.5px solid var(--border); }
+.info-card.blue { background:var(--light-blue); border-color:#b8d4f0; }
+.info-card.green { background:var(--light-green); border-color:#a8d8bc; }
+.info-card-label { font-size:11px; font-weight:700; letter-spacing:.08em; margin-bottom:6px; }
+.blue .info-card-label { color:var(--primary); }
+.green .info-card-label { color:var(--green); }
+.info-card-value { font-size:13px; font-weight:600; color:var(--text); line-height:1.5; }
+.schedule-table { width:100%; border-collapse:collapse; font-size:13.5px; border-radius:10px; overflow:hidden; border:1.5px solid var(--border); }
+.schedule-table thead tr { background:var(--primary); color:#fff; }
+.schedule-table.green-head thead tr { background:var(--green); }
+.schedule-table th { padding:11px 14px; font-weight:700; font-size:13px; text-align:center; letter-spacing:.03em; }
+.schedule-table td { padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; line-height:1.6; }
+.schedule-table tr:last-child td { border-bottom:none; }
+.schedule-table tbody tr:nth-child(even) { background:var(--light-gray); }
+.schedule-table .time-cell { font-weight:700; color:var(--primary); white-space:nowrap; text-align:center; font-size:13px; }
+.schedule-table.green-head .time-cell { color:var(--green); }
+.schedule-table .label-cell { font-weight:600; text-align:center; white-space:nowrap; }
+.notice-box { background:var(--light-yellow); border:1.5px solid #f0d070; border-radius:10px; padding:16px 20px; margin-top:16px; }
+.notice-title { font-size:12.5px; font-weight:700; color:#b07a00; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.notice-title::before { content:'⚠'; font-size:14px; }
+.notice-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+.notice-list li { font-size:13px; color:#5a4a10; line-height:1.65; padding-left:14px; position:relative; }
+.notice-list li::before { content:'·'; position:absolute; left:4px; font-weight:700; }
+
+/* 동의 폼 */
+.consent-section { margin:0 44px 32px; background:linear-gradient(135deg,#fff9f9 0%,#fef2f2 100%); border:2px solid #e8b4b4; border-radius:12px; overflow:hidden; }
+.consent-header { background:linear-gradient(90deg,var(--red),#e74c3c); color:#fff; padding:14px 24px; font-size:15px; font-weight:700; letter-spacing:.05em; display:flex; align-items:center; gap:8px; }
+.consent-header::before { content:'✅'; font-size:17px; }
+.consent-body { padding:20px 24px; }
+.consent-body p { font-size:13.5px; color:#4a3030; margin-bottom:16px; line-height:1.75; }
+.consent-body p strong { color:var(--red); }
+.consent-form-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px; }
+.form-group { display:flex; flex-direction:column; gap:5px; }
+.form-group label { font-size:11.5px; font-weight:700; color:#8b0000; letter-spacing:.05em; }
+.form-group select, .form-group input { padding:9px 12px; border:1.5px solid #d4a0a0; border-radius:7px; font-size:13px; font-family:'Noto Sans KR',sans-serif; color:var(--text); background:#fff; outline:none; transition:border-color .2s; }
+.form-group select:focus, .form-group input:focus { border-color:var(--red); }
+.submit-btn { width:100%; padding:14px; background:linear-gradient(90deg,var(--red),#e74c3c); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:700; font-family:'Noto Sans KR',sans-serif; cursor:pointer; letter-spacing:.05em; transition:opacity .2s,transform .1s; }
+.submit-btn:hover { opacity:.92; transform:translateY(-1px); }
+.submit-btn:active { transform:translateY(0); }
+.done-box { display:none; text-align:center; padding:28px 20px; }
+.done-icon { font-size:56px; margin-bottom:12px; }
+.done-title { font-size:18px; font-weight:700; color:var(--green); margin-bottom:8px; }
+.done-sub { font-size:13.5px; color:var(--gray); line-height:1.7; }
+.done-info { display:inline-block; margin-top:14px; background:var(--light-green); border:1.5px solid #a8d8bc; border-radius:8px; padding:10px 24px; font-size:14px; font-weight:600; color:var(--green); }
+.error-msg { display:none; background:#fdecea; border:1.5px solid #f5b7b1; border-radius:7px; padding:10px 14px; font-size:13px; color:#c0392b; margin-top:10px; }
+.nl-footer { background:var(--light-blue); padding:16px 44px; display:flex; justify-content:space-between; align-items:center; border-top:1.5px solid var(--border); }
+.footer-school { font-size:14px; font-weight:700; color:var(--primary); }
+.footer-contact { font-size:12.5px; color:var(--gray); text-align:right; line-height:1.6; }
+
+/* ══════════════════════════════
+   교사 대시보드
+══════════════════════════════ */
+/* 비밀번호 잠금 화면 */
+.lock-screen {
+  max-width:400px; margin:60px auto; background:#fff;
+  border-radius:16px; box-shadow:0 4px 30px rgba(26,79,138,.15);
+  padding:40px 36px; text-align:center;
+}
+.lock-icon { font-size:52px; margin-bottom:16px; }
+.lock-title { font-size:20px; font-weight:900; color:var(--primary); margin-bottom:6px; }
+.lock-sub { font-size:13px; color:var(--gray); margin-bottom:28px; }
+.lock-input {
+  width:100%; padding:14px 16px; border:2px solid var(--border);
+  border-radius:10px; font-size:20px; font-family:'Noto Sans KR',sans-serif;
+  text-align:center; letter-spacing:.3em; outline:none; transition:border-color .2s;
+  margin-bottom:14px;
+}
+.lock-input:focus { border-color:var(--primary); }
+.lock-input.error { border-color:var(--red); animation:shake .3s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+.lock-btn {
+  width:100%; padding:14px; background:var(--primary); color:#fff;
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  font-family:'Noto Sans KR',sans-serif; cursor:pointer; transition:opacity .2s;
+}
+.lock-btn:hover { opacity:.88; }
+.lock-error { font-size:13px; color:var(--red); margin-top:10px; display:none; }
+
+/* 대시보드 본문 */
+.dashboard { display:none; padding:24px 20px 40px; }
+.top-bar { max-width:1100px; margin:0 auto 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.top-bar h1 { font-size:20px; font-weight:900; color:var(--primary); display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.top-bar h1 span { font-size:12px; font-weight:400; color:var(--gray); }
+.btn { padding:10px 18px; border:none; border-radius:8px; font-size:13px; font-weight:700; font-family:'Noto Sans KR',sans-serif; cursor:pointer; transition:opacity .15s,transform .1s; }
+.btn:hover { opacity:.88; transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+.btn-excel { background:linear-gradient(90deg,#217346,#2ecc71); color:#fff; }
+.btn-reset { background:#fff; color:var(--red); border:1.5px solid var(--red); }
+.btn-refresh { background:var(--primary); color:#fff; }
+.btn-lock { background:#fff; color:var(--gray); border:1.5px solid var(--border); }
+
+.stats { max-width:1100px; margin:0 auto 20px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.stat-card { background:#fff; border-radius:12px; padding:18px 20px; box-shadow:0 2px 10px rgba(26,79,138,.07); border-top:4px solid var(--primary); }
+.stat-card.red { border-color:var(--red); }
+.stat-card.green { border-color:var(--green); }
+.stat-card.orange { border-color:var(--accent); }
+.stat-label { font-size:12px; color:var(--gray); font-weight:500; margin-bottom:6px; letter-spacing:.04em; }
+.stat-val { font-size:32px; font-weight:900; color:var(--text); line-height:1; }
+.stat-val.red { color:var(--red); }
+.stat-val.green { color:var(--green); }
+.stat-sub { font-size:12px; color:var(--gray); margin-top:4px; }
+
+.progress-section { max-width:1100px; margin:0 auto 20px; background:#fff; border-radius:12px; padding:20px 24px; box-shadow:0 2px 10px rgba(26,79,138,.07); }
+.progress-section h2 { font-size:15px; font-weight:700; color:var(--primary); margin-bottom:14px; }
+.class-bars { display:flex; flex-direction:column; gap:10px; }
+.class-bar-row { display:grid; grid-template-columns:60px 1fr 80px; align-items:center; gap:10px; }
+.class-bar-label { font-size:13px; font-weight:700; color:var(--text); text-align:right; }
+.bar-track { background:#eef1f6; border-radius:20px; height:14px; overflow:hidden; }
+.bar-fill { height:100%; background:linear-gradient(90deg,var(--red),#e74c3c); border-radius:20px; transition:width .5s ease; min-width:2px; }
+.class-bar-pct { font-size:13px; font-weight:700; color:var(--red); text-align:right; }
+
+.table-section { max-width:1100px; margin:0 auto 20px; background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(26,79,138,.07); overflow:hidden; }
+.table-header { padding:16px 24px; background:var(--primary); color:#fff; display:flex; justify-content:space-between; align-items:center; }
+.table-header h2 { font-size:15px; font-weight:700; }
+.table-header span { font-size:12px; opacity:.8; }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+thead tr { background:var(--light-blue); }
+th { padding:11px 14px; text-align:center; font-weight:700; font-size:12.5px; color:var(--primary); letter-spacing:.03em; border-bottom:2px solid var(--border); }
+td { padding:10px 14px; border-bottom:1px solid var(--border); text-align:center; }
+tbody tr:hover { background:#f8fafc; }
+tbody tr:last-child td { border-bottom:none; }
+.tag-class { display:inline-block; background:var(--primary); color:#fff; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; }
+.tag-time { font-size:12px; color:var(--gray); }
+.empty-row td { color:var(--gray); font-size:14px; padding:40px; }
+
+.roster-section { max-width:1100px; margin:0 auto 20px; background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(26,79,138,.07); overflow:hidden; }
+.roster-header { padding:16px 24px; background:var(--green); color:#fff; display:flex; justify-content:space-between; align-items:center; }
+.roster-header h2 { font-size:15px; font-weight:700; }
+.roster-grid { padding:16px 20px; display:grid; grid-template-columns:repeat(9,1fr); gap:2px; font-size:12px; overflow-x:auto; }
+.roster-class-header { background:var(--primary); color:#fff; text-align:center; padding:6px 4px; font-weight:700; font-size:12px; border-radius:4px 4px 0 0; }
+.roster-col { display:flex; flex-direction:column; gap:2px; min-width:60px; }
+.roster-name { padding:5px 4px; text-align:center; border-radius:4px; background:#f4f6f9; color:var(--text); font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.roster-name.consented { background:#fdecea; color:var(--red); font-weight:700; border:1.5px solid #f5b7b1; }
+
+/* 반응형 */
+@media(max-width:700px) {
+  .stats { grid-template-columns:repeat(2,1fr); }
+  .body-wrap { padding:20px 18px; }
+  .header { padding:24px 18px 20px; }
+  .greeting { padding:14px 18px; }
+  .info-cards { grid-template-columns:1fr; }
+  .consent-form-row { grid-template-columns:1fr; }
+  .consent-section { margin:0 18px 24px; }
+  .nl-footer { padding:14px 18px; flex-direction:column; gap:6px; text-align:center; }
+  .header-year { display:none; }
+  .roster-grid { grid-template-columns:repeat(9,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- 탭 바 -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('newsletter')">📄 학부모 동의서</button>
+  <button class="tab-btn" onclick="showTab('dashboard')">📋 교사 대시보드</button>
+</div>
+
+<!-- ══════════════════════════════
+     가정통신문 뷰
+══════════════════════════════ -->
+<div id="view-newsletter" class="view active">
+<div class="page">
+  <div class="header">
+    <div class="school-badge">봉곡중학교 학부모 동의서</div>
+    <h1>1학년 자유학기 <span>현장체험학습</span> 참가 동의서</h1>
+    <p class="header-sub">2026학년도 1학년 교과연계 · (수)7교시 진로교육 연계 자유학기 현장체험학습<br>제15회 대구국제로봇산업전 · 미래모빌리티엑스포 · ICT융합엑스포 &amp; 대구미술관 연계 체험</p>
+    <div class="header-year">2026</div>
+  </div>
+
+  <div class="greeting">
+    안녕하십니까? 항상 본교 교육활동에 <strong>깊은 관심과 협조</strong>를 보내주셔서 감사드립니다.<br>
+    아래와 같이 <strong>1학년 자유학기 현장체험학습</strong>을 실시하고자 하오니, 내용을 확인하신 후
+    <strong>참가 동의 여부를 제출</strong>하여 주시기 바랍니다.
+  </div>
+
+  <div class="body-wrap">
+
+    <!-- ① 행사 개요 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-number num-blue">①</div>
+        <h2>현장체험학습 <em>행사 개요</em></h2>
+      </div>
+      <div class="info-cards">
+        <div class="info-card blue"><div class="info-card-label">📅 일시</div><div class="info-card-value">2026. 10. 21.(수)<br>08:30 ~ 16:30</div></div>
+        <div class="info-card blue"><div class="info-card-label">📍 장소</div><div class="info-card-value">엑스코(EXCO) · 대구미술관<br><span style="font-size:11.5px;color:#5a6272">대구미술관: 수성구 미술관로 40</span></div></div>
+        <div class="info-card blue"><div class="info-card-label">👥 대상</div><div class="info-card-value">1학년 전체 233명<br><span style="font-size:11.5px;color:#5a6272">인솔교사 13명 내외</span></div></div>
+      </div>
+      <table class="schedule-table">
+        <thead><tr><th style="width:24%">구분</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td class="time-cell">장 소</td><td>① 엑스코(EXCO) 제15회 대구국제로봇산업전 · 미래모빌리티엑스포 · ICT융합엑스포<br>② 중식: 다담뜰(엑스코 내)  ③ 대구미술관(대구 수성구 미술관로 40)</td></tr>
+          <tr><td class="time-cell">교통수단</td><td>관광버스 45인승 6대 (학교 ↔ 엑스코 ↔ 대구미술관 ↔ 학교)</td></tr>
+          <tr><td class="time-cell">주요활동</td><td>첨단 로봇 · 모빌리티 · ICT 체험 / 중식 / 미술관 전시 관람 및 감상 활동</td></tr>
+          <tr><td class="time-cell">주 관</td><td>봉곡중학교 1학년부 (협조: 학생부, 행정실)</td></tr>
+        </tbody>
+      </table>
+      <div class="notice-box">
+        <div class="notice-title">체험 목적</div>
+        <ul class="notice-list">
+          <li>자유학기제 취지에 맞추어 로봇 · 미래모빌리티 · ICT 등 첨단 산업 현장을 직접 체험하며 진로를 탐색합니다.</li>
+          <li>미술관 관람을 통해 심미적 감수성과 문화 향유 능력을 함양합니다.</li>
+          <li>단체 활동을 통해 공동체 의식과 질서 의식을 기릅니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ② 세부 일정 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-number num-green">②</div>
+        <h2>당일 <em style="color:var(--green)">세부 일정표</em></h2>
+      </div>
+      <table class="schedule-table green-head">
+        <thead><tr><th style="width:22%">시간</th><th style="width:26%">장소</th><th>활동 내용</th></tr></thead>
+        <tbody>
+          <tr><td class="time-cell">08:40 출발</td><td class="label-cell">학교 큰길</td><td>집결 / 출석 확인 / 안전교육 / 승차 (학급별 정렬)</td></tr>
+          <tr><td class="time-cell">08:40 ~ 09:40</td><td class="label-cell">학교 → 엑스코</td><td>버스 이동 (6대 동시 이동)</td></tr>
+          <tr><td class="time-cell">09:50 ~ 12:00</td><td class="label-cell">엑스코<br>(3개 전시)</td><td>산업용 · 서비스 로봇, 드론, AR/VR · AI, 미래모빌리티, ICT 전시 관람<br>조별 체험 및 미션지 활동 (조별 분산 입장)</td></tr>
+          <tr><td class="time-cell">12:00 ~ 13:30</td><td class="label-cell">다담뜰(엑스코 내)</td><td>중식 — 단체 한식 (4개 홀 분산 좌석)</td></tr>
+          <tr><td class="time-cell">13:30 ~ 14:00</td><td class="label-cell">엑스코 → 대구미술관</td><td>버스 이동 및 인원 확인</td></tr>
+          <tr><td class="time-cell">14:00 ~ 15:40</td><td class="label-cell">대구미술관</td><td>전시 관람 및 감상 활동 (조별 관람 / 도슨트 활용, 30분 간격 분산)</td></tr>
+          <tr><td class="time-cell">15:40 ~ 16:30</td><td class="label-cell">대구미술관 → 학교</td><td>버스 이동 및 도착 / 학급별 인원 확인 후 귀가 지도</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ③ 안전 및 준비 사항 -->
+    <div class="section">
+      <div class="section-title">
+        <div class="section-number num-blue">③</div>
+        <h2>안전 지도 및 <em>가정 협조 사항</em></h2>
+      </div>
+      <div class="notice-box">
+        <div class="notice-title">유의 사항 · 준비물</div>
+        <ul class="notice-list">
+          <li>당일 <strong>08:30까지 학교 큰길로 등교</strong>하여 출석 확인 및 안전교육 후 승차합니다.</li>
+          <li>활동이 편한 복장(체육복 등)과 운동화를 착용하고, 개인 물병 · 필기구 · 미션지를 지참합니다.</li>
+          <li>중식은 단체 급식(다담뜰)으로 제공되므로 별도 도시락은 필요하지 않습니다.</li>
+          <li>전시장 · 미술관 내에서는 조별 이동 원칙을 지키고, 인솔교사의 안전 지도에 따릅니다.</li>
+          <li>지병 · 알레르기 · 복용 약물 등 <strong>건강상 유의 사항이 있는 경우 담임교사에게 사전에 알려 주십시오.</strong></li>
+          <li>귀교 예정 시각은 16:30이며, 교통 상황에 따라 다소 변동될 수 있습니다.</li>
+        </ul>
+      </div>
+      <div class="notice-box" style="border-color:#a8d8bc;background:var(--light-green);margin-top:14px;">
+        <div class="notice-title" style="color:#1f6b3a;">개인정보 수집 · 이용 안내</div>
+        <ul class="notice-list" style="color:#1e4030;">
+          <li>수집 항목: 학년 · 반, 학생 성명, 보호자 성명, 제출 일시</li>
+          <li>수집 목적: 현장체험학습 참가 동의 확인 및 안전 관리</li>
+          <li>보유 기간: 체험학습 종료 후 관련 규정에 따라 보관 · 폐기</li>
+          <li>동의를 거부하실 수 있으나, 이 경우 현장체험학습 참가가 제한될 수 있습니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 동의 제출 -->
+  <div class="consent-section">
+    <div class="consent-header">현장체험학습 참가 동의 및 확인 제출</div>
+    <div class="consent-body">
+      <div id="consentForm">
+        <p>위 안내 내용을 확인하였으며, 자녀의 <strong>2026. 10. 21.(수) 현장체험학습 참가에 동의</strong>합니다.<br>
+        또한 <strong>개인정보 수집 · 이용</strong>에 동의합니다. 아래 정보를 입력하고 동의 버튼을 눌러주세요.</p>
+        <div class="consent-form-row">
+          <div class="form-group">
+            <label>반</label>
+            <select id="classNum">
+              <option value="">-- 반 선택 --</option>
+              <option value="1">1반</option><option value="2">2반</option><option value="3">3반</option>
+              <option value="4">4반</option><option value="5">5반</option><option value="6">6반</option>
+              <option value="7">7반</option><option value="8">8반</option><option value="9">9반</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>학생 이름</label>
+            <input type="text" id="studentName" placeholder="자녀 이름 입력">
+          </div>
+          <div class="form-group">
+            <label>보호자 이름</label>
+            <input type="text" id="parentName" placeholder="보호자 이름 입력">
+          </div>
+        </div>
+        <div id="errorMsg" class="error-msg"></div>
+        <button class="submit-btn" onclick="submitConsent()">✅ 동의합니다 — 제출하기</button>
+      </div>
+      <div class="done-box" id="doneBox">
+        <div class="done-icon">✅</div>
+        <div class="done-title">동의가 완료되었습니다!</div>
+        <div class="done-sub">담임선생님께 동의 내용이 전달되었습니다.<br>2026. 10. 21.(수) 현장체험학습 당일 안전하게 준비해 주세요.</div>
+        <div class="done-info" id="doneInfo"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nl-footer">
+    <div class="footer-school">봉곡중학교장</div>
+    <div class="footer-contact">문의: 교무실 (054) 442-1093<br>FAX: (054) 442-1096</div>
+  </div>
+</div>
+</div><!-- /view-newsletter -->
+
+<!-- ══════════════════════════════
+     교사 대시보드 뷰
+══════════════════════════════ -->
+<div id="view-dashboard" class="view">
+
+  <!-- 비밀번호 잠금 화면 -->
+  <div class="lock-screen" id="lockScreen">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">교사 전용 대시보드</div>
+    <div class="lock-sub">접근하려면 비밀번호를 입력하세요.</div>
+    <input type="password" class="lock-input" id="lockInput" placeholder="● ● ● ●"
+      maxlength="10" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="lock-btn" onclick="checkPassword()">🔓 확인</button>
+    <div class="lock-error" id="lockError">비밀번호가 틀렸습니다.</div>
+  </div>
+
+  <!-- 대시보드 본문 (잠금 해제 후 표시) -->
+  <div class="dashboard" id="dashboardBody">
+    <div class="top-bar">
+      <h1>📋 동의 현황 대시보드 <span>봉곡중학교 1학년 현장체험학습 2026.10.21</span></h1>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-refresh" onclick="renderAll()">🔄 새로고침</button>
+        <button class="btn btn-excel" onclick="downloadExcel()">📥 엑셀 다운로드</button>
+        <button class="btn btn-reset" onclick="resetData()">🗑 전체 초기화</button>
+        <button class="btn btn-lock" onclick="lockDashboard()">🔒 잠금</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card"><div class="stat-label">전체 학생</div><div class="stat-val" id="totalCount">—</div><div class="stat-sub">1학년 9개 반</div></div>
+      <div class="stat-card red"><div class="stat-label">동의 완료</div><div class="stat-val red" id="consentCount">0</div><div class="stat-sub">학부모 제출</div></div>
+      <div class="stat-card green"><div class="stat-label">동의율</div><div class="stat-val green" id="consentRate">0%</div><div class="stat-sub">전체 대비</div></div>
+      <div class="stat-card orange"><div class="stat-label">미제출</div><div class="stat-val" id="pendingCount">—</div><div class="stat-sub">아직 미동의</div></div>
+    </div>
+
+    <div class="progress-section">
+      <h2>반별 동의 현황</h2>
+      <div class="class-bars" id="classBars"></div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-header">
+        <h2>✅ 동의 제출 명단</h2>
+        <span id="listCount">0명</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>반</th><th>학생 이름</th><th>보호자</th><th>제출 시각</th></tr></thead>
+          <tbody id="consentTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="roster-section">
+      <div class="roster-header">
+        <h2>📌 전체 명렬 — 동의자 빨간색 표시</h2>
+        <span id="rosterCount" style="font-size:12px;opacity:.85;"></span>
+      </div>
+      <div style="overflow-x:auto;">
+        <div class="roster-grid" id="rosterGrid"></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /view-dashboard -->
+
+<script>
+// ── 공통 데이터 ──
+const STORAGE_KEY = 'bonggok_consent_2026_exco';
+const DASHBOARD_PW = '7752';
+
+const STUDENTS = [{"name":"LINALUN","row":3,"col":2,"class":1},{"name":"강민채","row":3,"col":3,"class":2},{"name":"강소율","row":3,"col":4,"class":3},{"name":"강예나","row":3,"col":5,"class":4},{"name":"강예솔","row":3,"col":6,"class":5},{"name":"강유담","row":3,"col":7,"class":6},{"name":"고윤진","row":3,"col":8,"class":7},{"name":"권나은","row":3,"col":9,"class":8},{"name":"권라윤","row":3,"col":10,"class":9},{"name":"김다빈","row":4,"col":2,"class":1},{"name":"강승준","row":4,"col":3,"class":2},{"name":"강주한","row":4,"col":4,"class":3},{"name":"강태윤","row":4,"col":5,"class":4},{"name":"권예은","row":4,"col":6,"class":5},{"name":"공민규","row":4,"col":7,"class":6},{"name":"권도윤","row":4,"col":8,"class":7},{"name":"권민석","row":4,"col":9,"class":8},{"name":"권민서","row":4,"col":10,"class":9},{"name":"권민준","row":5,"col":2,"class":1},{"name":"고윤우","row":5,"col":3,"class":2},{"name":"김나윤","row":5,"col":4,"class":3},{"name":"김가온","row":5,"col":5,"class":4},{"name":"김서윤","row":5,"col":6,"class":5},{"name":"권예본","row":5,"col":7,"class":6},{"name":"권아정","row":5,"col":8,"class":7},{"name":"김명준","row":5,"col":9,"class":8},{"name":"LIZHENGHAO","row":5,"col":10,"class":9},{"name":"김라온","row":6,"col":2,"class":1},{"name":"김나율","row":6,"col":3,"class":2},{"name":"김민근","row":6,"col":4,"class":3},{"name":"김민건","row":6,"col":5,"class":4},{"name":"권정훈","row":6,"col":6,"class":5},{"name":"김도하","row":6,"col":7,"class":6},{"name":"김관영","row":6,"col":8,"class":7},{"name":"권민지","row":6,"col":9,"class":8},{"name":"권시우","row":6,"col":10,"class":9},{"name":"김민준","row":7,"col":2,"class":1},{"name":"김문주","row":7,"col":3,"class":2},{"name":"김민서","row":7,"col":4,"class":3},{"name":"김민진","row":7,"col":5,"class":4},{"name":"김세혁","row":7,"col":6,"class":5},{"name":"김선아","row":7,"col":7,"class":6},{"name":"김수애","row":7,"col":8,"class":7},{"name":"김수인","row":7,"col":9,"class":8},{"name":"김수현","row":7,"col":10,"class":9},{"name":"김민찬","row":8,"col":2,"class":1},{"name":"김민기","row":8,"col":3,"class":2},{"name":"김비준","row":8,"col":4,"class":3},{"name":"김윤성","row":8,"col":5,"class":4},{"name":"김예은","row":8,"col":6,"class":5},{"name":"김수현","row":8,"col":7,"class":6},{"name":"김시완","row":8,"col":8,"class":7},{"name":"김시완","row":8,"col":9,"class":8},{"name":"김승희","row":8,"col":10,"class":9},{"name":"김지후","row":9,"col":2,"class":1},{"name":"김성주","row":9,"col":3,"class":2},{"name":"김재호","row":9,"col":4,"class":3},{"name":"김채윤","row":9,"col":5,"class":4},{"name":"김온유","row":9,"col":6,"class":5},{"name":"김예빈","row":9,"col":7,"class":6},{"name":"김예빈","row":9,"col":8,"class":7},{"name":"김시준","row":9,"col":9,"class":8},{"name":"김시우","row":9,"col":10,"class":9},{"name":"김진영","row":10,"col":2,"class":1},{"name":"김민혁","row":10,"col":3,"class":2},{"name":"김채은","row":10,"col":4,"class":3},{"name":"김현진","row":10,"col":5,"class":4},{"name":"김태윤","row":10,"col":6,"class":5},{"name":"김예준","row":10,"col":7,"class":6},{"name":"김예준","row":10,"col":8,"class":7},{"name":"김예담","row":10,"col":9,"class":8},{"name":"김시원","row":10,"col":10,"class":9},{"name":"남유하","row":11,"col":2,"class":1},{"name":"김주엽","row":11,"col":3,"class":2},{"name":"김태윤","row":11,"col":4,"class":3},{"name":"박고은","row":11,"col":5,"class":4},{"name":"나수인","row":11,"col":6,"class":5},{"name":"나준성","row":11,"col":7,"class":6},{"name":"노희성","row":11,"col":8,"class":7},{"name":"도규원","row":11,"col":9,"class":8},{"name":"류윤호","row":11,"col":10,"class":9},{"name":"남윤지","row":12,"col":2,"class":1},{"name":"김하정","row":12,"col":3,"class":2},{"name":"박가인","row":12,"col":4,"class":3},{"name":"박시온","row":12,"col":5,"class":4},{"name":"박규연","row":12,"col":6,"class":5},{"name":"박나영","row":12,"col":7,"class":6},{"name":"박서연","row":12,"col":8,"class":7},{"name":"박대현","row":12,"col":9,"class":8},{"name":"문성빈","row":12,"col":10,"class":9},{"name":"박준서","row":13,"col":2,"class":1},{"name":"문예원","row":13,"col":3,"class":2},{"name":"박시윤","row":13,"col":4,"class":3},{"name":"박지윤","row":13,"col":5,"class":4},{"name":"박승준","row":13,"col":6,"class":5},{"name":"박성준","row":13,"col":7,"class":6},{"name":"박서준","row":13,"col":8,"class":7},{"name":"박서인","row":13,"col":9,"class":8},{"name":"박세영","row":13,"col":10,"class":9},{"name":"박준우","row":14,"col":2,"class":1},{"name":"박준서","row":14,"col":3,"class":2},{"name":"박지완","row":14,"col":4,"class":3},{"name":"박지한","row":14,"col":5,"class":4},{"name":"박지우","row":14,"col":6,"class":5},{"name":"박지민","row":14,"col":7,"class":6},{"name":"박예빈","row":14,"col":8,"class":7},{"name":"박시연","row":14,"col":9,"class":8},{"name":"박소윤","row":14,"col":10,"class":9},{"name":"박효서","row":15,"col":2,"class":1},{"name":"박지성","row":15,"col":3,"class":2},{"name":"박진영","row":15,"col":4,"class":3},{"name":"성가은","row":15,"col":5,"class":4},{"name":"배종혁","row":15,"col":6,"class":5},{"name":"배준서","row":15,"col":7,"class":6},{"name":"서준혁","row":15,"col":8,"class":7},{"name":"석현승","row":15,"col":9,"class":8},{"name":"성이겸","row":15,"col":10,"class":9},{"name":"배은채","row":16,"col":2,"class":1},{"name":"박채현","row":16,"col":3,"class":2},{"name":"백지원","row":16,"col":4,"class":3},{"name":"송승훈","row":16,"col":5,"class":4},{"name":"송민솔","row":16,"col":6,"class":5},{"name":"손현민","row":16,"col":7,"class":6},{"name":"손지훈","row":16,"col":8,"class":7},{"name":"손우찬","row":16,"col":9,"class":8},{"name":"손연호","row":16,"col":10,"class":9},{"name":"안재영","row":17,"col":2,"class":1},{"name":"백서원","row":17,"col":3,"class":2},{"name":"신지율","row":17,"col":4,"class":3},{"name":"오건율","row":17,"col":5,"class":4},{"name":"양나경","row":17,"col":6,"class":5},{"name":"양아림","row":17,"col":7,"class":6},{"name":"양채윤","row":17,"col":8,"class":7},{"name":"여민서","row":17,"col":9,"class":8},{"name":"연채영","row":17,"col":10,"class":9},{"name":"양다온","row":18,"col":2,"class":1},{"name":"심우진","row":18,"col":3,"class":2},{"name":"엄현웅","row":18,"col":4,"class":3},{"name":"유예린","row":18,"col":5,"class":4},{"name":"오은율","row":18,"col":6,"class":5},{"name":"위연우","row":18,"col":7,"class":6},{"name":"우지민","row":18,"col":8,"class":7},{"name":"오채원","row":18,"col":9,"class":8},{"name":"오주아","row":18,"col":10,"class":9},{"name":"윤정원","row":19,"col":2,"class":1},{"name":"엄준혁","row":19,"col":3,"class":2},{"name":"윤수현","row":19,"col":4,"class":3},{"name":"이서원","row":19,"col":5,"class":4},{"name":"유민서","row":19,"col":6,"class":5},{"name":"이도윤","row":19,"col":7,"class":6},{"name":"유민석","row":19,"col":8,"class":7},{"name":"유현빈","row":19,"col":9,"class":8},{"name":"윤시율","row":19,"col":10,"class":9},{"name":"이다현","row":20,"col":2,"class":1},{"name":"윤예린","row":20,"col":3,"class":2},{"name":"이루미","row":20,"col":4,"class":3},{"name":"이세진","row":20,"col":5,"class":4},{"name":"이민성","row":20,"col":6,"class":5},{"name":"이수진","row":20,"col":7,"class":6},{"name":"윤태경","row":20,"col":8,"class":7},{"name":"이유나","row":20,"col":9,"class":8},{"name":"윤제근","row":20,"col":10,"class":9},{"name":"이예준","row":21,"col":2,"class":1},{"name":"이다혜","row":21,"col":3,"class":2},{"name":"이승우","row":21,"col":4,"class":3},{"name":"이지율","row":21,"col":5,"class":4},{"name":"이송민","row":21,"col":6,"class":5},{"name":"이한율","row":21,"col":7,"class":6},{"name":"이예원","row":21,"col":8,"class":7},{"name":"이지윤","row":21,"col":9,"class":8},{"name":"이은지","row":21,"col":10,"class":9},{"name":"이유혁","row":22,"col":2,"class":1},{"name":"이시우","row":22,"col":3,"class":2},{"name":"이주성","row":22,"col":4,"class":3},{"name":"이재선","row":22,"col":5,"class":4},{"name":"이태현","row":22,"col":6,"class":5},{"name":"임서윤","row":22,"col":7,"class":6},{"name":"이채율","row":22,"col":8,"class":7},{"name":"임예성","row":22,"col":9,"class":8},{"name":"이주빈","row":22,"col":10,"class":9},{"name":"전성결","row":23,"col":2,"class":1},{"name":"전가인","row":23,"col":3,"class":2},{"name":"장지인","row":23,"col":4,"class":3},{"name":"장지우","row":23,"col":5,"class":4},{"name":"임효린","row":23,"col":6,"class":5},{"name":"전유근","row":23,"col":7,"class":6},{"name":"임시우","row":23,"col":8,"class":7},{"name":"장재현","row":23,"col":9,"class":8},{"name":"임준서","row":23,"col":10,"class":9},{"name":"전찬민(특)","row":24,"col":2,"class":1},{"name":"정은서","row":24,"col":3,"class":2},{"name":"정인우","row":24,"col":4,"class":3},{"name":"정우빈","row":24,"col":5,"class":4},{"name":"정해지","row":24,"col":6,"class":5},{"name":"조은솔","row":24,"col":7,"class":6},{"name":"진익준","row":24,"col":8,"class":7},{"name":"진유림","row":24,"col":9,"class":8},{"name":"장우겸","row":24,"col":10,"class":9},{"name":"정세인","row":25,"col":2,"class":1},{"name":"장준영","row":25,"col":3,"class":2},{"name":"정채윤","row":25,"col":4,"class":3},{"name":"정해린","row":25,"col":5,"class":4},{"name":"차경호","row":25,"col":6,"class":5},{"name":"최연우","row":25,"col":7,"class":6},{"name":"진예랑","row":25,"col":8,"class":7},{"name":"최아윤","row":25,"col":9,"class":8},{"name":"최수아","row":25,"col":10,"class":9},{"name":"최가민","row":26,"col":2,"class":1},{"name":"최민혁","row":26,"col":3,"class":2},{"name":"최신우","row":26,"col":4,"class":3},{"name":"최정우","row":26,"col":5,"class":4},{"name":"최진리","row":26,"col":6,"class":5},{"name":"최현도","row":26,"col":7,"class":6},{"name":"최아인","row":26,"col":8,"class":7},{"name":"최호영","row":26,"col":9,"class":8},{"name":"최승","row":26,"col":10,"class":9},{"name":"황아현","row":27,"col":2,"class":1},{"name":"황다경","row":27,"col":3,"class":2},{"name":"홍지아","row":27,"col":4,"class":3},{"name":"현설아","row":27,"col":5,"class":4},{"name":"최하얀","row":27,"col":6,"class":5},{"name":"홍석현","row":27,"col":7,"class":6},{"name":"최현호","row":27,"col":8,"class":7},{"name":"한윤근","row":27,"col":9,"class":8},{"name":"피하윤","row":27,"col":10,"class":9},{"name":"황유림","row":28,"col":2,"class":1},{"name":"황이빈","row":28,"col":3,"class":2},{"name":"황지유(특)","row":28,"col":4,"class":3},{"name":"황재원","row":28,"col":5,"class":4},{"name":"황승준","row":28,"col":6,"class":5},{"name":"허지웅","row":28,"col":8,"class":7},{"name":"하유찬","row":28,"col":10,"class":9},{"name":"이현민","row":29,"col":6,"class":5}];
+
+const CLASS_TOTAL = {};
+STUDENTS.forEach(s => { CLASS_TOTAL[s.class] = (CLASS_TOTAL[s.class]||0)+1; });
+
+// ── 탭 전환 ──
+function showTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&tab==='newsletter')||(i===1&&tab==='dashboard')));
+  document.getElementById('view-newsletter').classList.toggle('active', tab==='newsletter');
+  document.getElementById('view-dashboard').classList.toggle('active', tab==='dashboard');
+}
+
+// ── 비밀번호 ──
+function checkPassword() {
+  const val = document.getElementById('lockInput').value;
+  const input = document.getElementById('lockInput');
+  const err = document.getElementById('lockError');
+  if (val === DASHBOARD_PW) {
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('dashboardBody').style.display = 'block';
+    renderAll();
+    setInterval(renderAll, 10000);
+  } else {
+    input.classList.add('error');
+    err.style.display = 'block';
+    input.value = '';
+    setTimeout(() => input.classList.remove('error'), 400);
+  }
+}
+
+function lockDashboard() {
+  document.getElementById('dashboardBody').style.display = 'none';
+  document.getElementById('lockScreen').style.display = 'block';
+  document.getElementById('lockInput').value = '';
+  document.getElementById('lockError').style.display = 'none';
+}
+
+// ── localStorage ──
+function getConsented() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}'); } catch { return {}; }
+}
+function saveConsented(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// ── 동의 제출 ──
+function submitConsent() {
+  const classNum = parseInt(document.getElementById('classNum').value);
+  const studentName = document.getElementById('studentName').value.trim();
+  const parentName = document.getElementById('parentName').value.trim();
+  const errEl = document.getElementById('errorMsg');
+  errEl.style.display = 'none';
+
+  if (!classNum) { showError('반을 선택해 주세요.'); return; }
+  if (!studentName) { showError('학생 이름을 입력해 주세요.'); return; }
+  if (!parentName) { showError('보호자 이름을 입력해 주세요.'); return; }
+
+  const match = STUDENTS.find(s => s.class === classNum && s.name === studentName);
+  if (!match) {
+    showError(`${classNum}반에서 '${studentName}' 학생을 찾을 수 없습니다.\n이름 또는 반을 다시 확인해 주세요.`);
+    return;
+  }
+
+  const consented = getConsented();
+  const key = `${match.row}-${match.col}`;
+  if (!consented[key]) {
+    consented[key] = { name: studentName, class: classNum, parent: parentName, time: new Date().toLocaleString('ko-KR'), row: match.row, col: match.col };
+    saveConsented(consented);
+  }
+
+  document.getElementById('consentForm').style.display = 'none';
+  const doneBox = document.getElementById('doneBox');
+  doneBox.style.display = 'block';
+  document.getElementById('doneInfo').textContent = `${classNum}반 ${studentName} (보호자: ${parentName})`;
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── 대시보드 렌더링 ──
+function renderAll() {
+  const consented = getConsented();
+  const consentedKeys = Object.keys(consented);
+  const total = STUDENTS.length;
+  const count = consentedKeys.length;
+
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('consentCount').textContent = count;
+  document.getElementById('consentRate').textContent = total ? Math.round(count/total*100)+'%' : '0%';
+  document.getElementById('pendingCount').textContent = total - count;
+  document.getElementById('listCount').textContent = count + '명';
+
+  // 반별 바
+  const classCounts = {};
+  consentedKeys.forEach(k => { const c = consented[k].class; classCounts[c] = (classCounts[c]||0)+1; });
+  const barsEl = document.getElementById('classBars');
+  barsEl.innerHTML = '';
+  for (let c=1; c<=9; c++) {
+    const done = classCounts[c]||0;
+    const tot = CLASS_TOTAL[c]||0;
+    const pct = tot ? Math.round(done/tot*100) : 0;
+    const row = document.createElement('div');
+    row.className = 'class-bar-row';
+    row.innerHTML = `<div class="class-bar-label">${c}반</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      <div class="class-bar-pct">${done}/${tot} (${pct}%)</div>`;
+    barsEl.appendChild(row);
+  }
+
+  // 동의 명단
+  const tbody = document.getElementById('consentTable');
+  if (count === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="4">아직 동의 제출이 없습니다.</td></tr>';
+  } else {
+    const sorted = consentedKeys.map(k=>consented[k]).sort((a,b)=>a.class-b.class||a.name.localeCompare(b.name,'ko'));
+    tbody.innerHTML = sorted.map(s=>`
+      <tr>
+        <td><span class="tag-class">${s.class}반</span></td>
+        <td><strong>${s.name}</strong></td>
+        <td>${s.parent}</td>
+        <td class="tag-time">${s.time}</td>
+      </tr>`).join('');
+  }
+
+  // 전체 명렬
+  document.getElementById('rosterCount').textContent = `동의: ${count}명 / 전체: ${total}명`;
+  const grid = document.getElementById('rosterGrid');
+  grid.innerHTML = '';
+  for (let c=1; c<=9; c++) {
+    const col = document.createElement('div');
+    col.className = 'roster-col';
+    const header = document.createElement('div');
+    header.className = 'roster-class-header';
+    header.textContent = c+'반';
+    col.appendChild(header);
+    STUDENTS.filter(s=>s.class===c).forEach(s => {
+      const key = `${s.row}-${s.col}`;
+      const el = document.createElement('div');
+      el.className = 'roster-name' + (consented[key] ? ' consented' : '');
+      el.textContent = s.name;
+      el.title = consented[key] ? `✅ ${s.name} (보호자: ${consented[key].parent})` : s.name;
+      col.appendChild(el);
+    });
+    grid.appendChild(col);
+  }
+}
+
+// ── 엑셀 다운로드 ──
+function downloadExcel() {
+  const consented = getConsented();
+  const wb = XLSX.utils.book_new();
+  const wsData = [['1학년 전체 명렬 (동의자 빨간색 표시)',null,null,null,null,null,null,null,null,null],[null,1,2,3,4,5,6,7,8,9]];
+  const maxRow = Math.max(...STUDENTS.map(s=>s.row));
+  for (let r=3; r<=maxRow; r++) {
+    const row = [r-2];
+    for (let c=2; c<=10; c++) {
+      const s = STUDENTS.find(x=>x.row===r && x.col===c);
+      row.push(s ? s.name : null);
+    }
+    wsData.push(row);
+  }
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+  Object.keys(consented).forEach(key => {
+    const [row,col] = key.split('-').map(Number);
+    const cellAddr = XLSX.utils.encode_cell({r:row-1,c:col-1});
+    if (!ws[cellAddr]) return;
+    ws[cellAddr].s = { fill:{fgColor:{rgb:'FF0000'},patternType:'solid'}, font:{bold:true,color:{rgb:'FFFFFF'}}, alignment:{horizontal:'center',vertical:'center'} };
+  });
+  ws['!cols'] = [{wch:5},...Array(9).fill({wch:12})];
+  XLSX.utils.book_append_sheet(wb, ws, '1학년 명렬');
+
+  const summaryData = [['반','학생 이름','보호자','제출 시각']];
+  Object.keys(consented).map(k=>consented[k]).sort((a,b)=>a.class-b.class||a.name.localeCompare(b.name,'ko'))
+    .forEach(s => summaryData.push([s.class+'반',s.name,s.parent,s.time]));
+  const ws2 = XLSX.utils.aoa_to_sheet(summaryData);
+  ws2['!cols'] = [{wch:8},{wch:14},{wch:14},{wch:22}];
+  XLSX.utils.book_append_sheet(wb, ws2, '동의자 명단');
+
+  const today = new Date().toLocaleDateString('ko-KR').replace(/\. /g,'-').replace('.','');
+  XLSX.writeFile(wb, `1학년_현장체험학습_동의현황_${today}.xlsx`, {cellStyles:true});
+}
+
+function resetData() {
+  if (!confirm('⚠️ 모든 동의 데이터를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  renderAll();
+  alert('초기화 완료');
+}
+
+// Enter 키 동의 제출
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('view-newsletter').classList.contains('active')) {
+    if (document.activeElement.closest('#consentForm')) submitConsent();
+  }
+});
+</script>
+</body>
+</html>
